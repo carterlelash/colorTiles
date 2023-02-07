@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LightUpBoard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script>
+      var titles = ["BrightTile Games", "ColorBlast Minigames", "Tiletopia", "Rainbow Ridge", "Chroma Zone", "Tile Twister", "ColorCraze", "Hue Haven", "Tile Tangle", "Pixel Playground", "Tiletopia", "Color Collision", "BrightBlock", "Tile Tempest", "Hue House", "Pixel Party", "Tile Tycoon", "Color Chaos", "BrightBits", "Tile Takedown", "Hue Hunt", "Pixel Playground", "Tile Tourney", "ColorCraze", "BrightTile", "Tile Tangle", "Hue Haven", "Pixel Party", "Tiletopia", "Color Collision", "BrightBlock", "Tile Tempest", "Hue House", "Pixel Playground", "Tile Tycoon", "Color Chaos", "BrightBits", "Tile Takedown", "Hue Hunt", "Pixel Playground", "Tile Tourney", "ColorCraze", "BrightTile", "Tile Tangle", "Hue Haven", "Pixel Party", "Tiletopia", "Color Collision", "BrightBlock", "Tile Tempest", "Hue House", "Pixel Playground", "Tile Tycoon", "Color Chaos", "BrightBits", "Tile Takedown", "Hue Hunt", "Pixel Playground", "Tile Tourney", "ColorCraze", "BrightTile", "Tile Tangle", "Hue Haven", "Pixel Party", "Tiletopia", "Color Collision"];
+      var randomTitle = titles[Math.floor(Math.random()*titles.length)];
+    </script>
+</head>
+<body>
+  <div id = "asdf"></div>
+<style>
+    body {
+        background-color:grey;
+    }
+    .square {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        display: inline-block;
+    }
+</style>
+<!-- <script>
+
+    let hue = 0;
+let increment = 1;
+
+setInterval(() => {
+  document.body.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+  hue = (hue + increment) % 360;
+}, 100);
+
+function doTheseAlways() {
+
+    setInterval(() => {
+        document.body.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+        hue = (hue + increment) % 360;
+    }, 100);
+
+
+}
+
+</script> -->
+<script>
+  var testbutton = document.getElementById("asdf");
+    testbutton.style.padding = "0px"
+    testbutton.style.backgroundColor = "red";
+
+    testbutton.style.height = "30px"
+    testbutton.style.width = "30px"
+
+    var totalTiles = 0
+    const tiles = [];
+
+    testbutton.addEventListener("click", () => {makeButton()});
+    
+    function makeButton() {
+    for (let i = 0; i < 10000; i++) {
+  // Create a new div element
+  let square = document.createElement("div");
+  
+  // Add a class to the div for styling
+  square.classList.add("square");
+  square.style.backgroundColor = "black"
+        square.style.borderWidth = "0px;"
+        square.style.boderRadius = "0%"
+        square.style.height = "50px"
+        square.style.width = "50px"
+        square.id = `tiles${i}`
+        square.style.margin = "0px"
+        square.style.border = "none"
+        tiles.push(i);
+        square.innerHTML = ""
+        square.addEventListener("mouseover",() => {changeColor(event)});
+        square.addEventListener("mouseout",() => {changeColor(event)});
+        square
+        totalTiles++;
+  // Append the square to the body of the document
+  document.body.appendChild(square);
+}
+    }
+
+    function changeColor(event) {
+        var R1 = Math.floor(Math.random() * 256)
+        var G1 = Math.floor(Math.random() * 256)
+        var B1 = Math.floor(Math.random() * 256)
+
+        var changee = `${R1},${G1},${B1}`;
+
+        console.log(`Numbers: ${R1},${G1},${B1}`);
+        event.target.style.background = `rgb(${R1},${G1},${B1})`
+        event.target.style.color = `rgb(${R1},${G1},${B1})`
+    }
+</script>
+</body>
+</html>

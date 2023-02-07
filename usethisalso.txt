@@ -1,0 +1,85 @@
+   <button id="moving-square" style = "position:absolute; height:50px; width:50px; background-color:red;"></button>
+    <button id="moving-square2" style = "position:absolute; height:50px; width:50px; background-color:green"></button>
+    <button id="moving-square3" style = "position:absolute; height:50px; width:50px; background-color:yellow"></button>
+    <button id="moving-square4" style = "position:absolute; height:50px; width:50px; background-color:blue"></button>
+    
+ 
+ <script>
+
+    let square2 = document.getElementById("moving-square2");
+
+        let x = (window.innerWidth/2)-50;
+        let y = (window.innerHeight/2)-150;
+
+        square2.style.left = x + "px";
+        square2.style.top = y + "px";
+    </script>
+  <script>
+      // Get the moving square element
+let square = document.getElementById("moving-square");
+let square3 = document.getElementById("moving-square3");
+let square4 = document.getElementById("moving-square4");
+
+// Set the initial position of the square
+square.style.left = (window.innerWidth/2) - 50 + "px";
+square.style.top = (window.innerHeight/2) - 50 + "px";
+
+// Set the end position of the square
+let endPosition = window.innerWidth - 100;
+
+// Set the duration of the animation
+let duration = 5000;
+
+// Get the current time
+let startTime = Date.now();
+
+// Function to animate the square
+function animate() {
+    // Get the time elapsed since the animation started
+    let timeElapsed = Date.now() - startTime;
+
+    // Calculate the new position of the square based on the time elapsed
+    let newLeft = (timeElapsed / duration) * endPosition;
+
+    // Update the square's position
+    square.style.left = newLeft + "px";
+
+    // If the animation is not complete, call the animate() function again
+    if (timeElapsed < duration) {
+        requestAnimationFrame(animate);
+    }
+}
+
+let angle = 0;
+
+function animateAgain(object, x, y, direction, radius, speed) {
+    // Calculate the new x and y positions based on the angle and radius
+    let newX;
+    let newY;
+    if (direction) {
+        newX = x + radius * Math.cos(angle);
+        newY = y + radius * Math.sin(angle);
+    } else {
+        newX = x - radius * Math.cos(angle);
+        newY = y - radius * Math.sin(angle);
+    }
+
+    // Update the object's position
+    object.style.left = newX + "px";
+    object.style.top = newY + "px";
+
+    // Increase the angle for the next iteration
+    angle += speed;
+
+    // Use requestAnimationFrame() to call the animateAgain() function again
+    requestAnimationFrame(() => animateAgain(object, x, y, direction, radius, speed));
+}
+
+
+
+animateAgain(square, 150, 300, true, 100, 0.01);
+animateAgain(square2, 300, 300, false, 100, 0.01);
+animateAgain(square3, 450, 300, true, 100, 0.01);
+animateAgain(square4, 600, 300, false, 100, 0.01);
+
+  </script>

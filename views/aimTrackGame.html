@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ColorTiles</title>
+</head>
+<body>
+    <div id = "block"></div>
+    <style>
+        body {
+            border-width:5px;
+            border-color:black;
+        }
+        #block {
+            width:30px;
+            height:30px;
+            background-color:black;
+            position:absolute;
+        }
+    </style>
+    <script>
+   
+    function changeColor(obj) {
+    if(obj instanceof HTMLElement){
+        console.log("what");
+        let hue = 0;
+        let increment = 1;
+        setInterval(() => {
+        obj.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+        hue += increment % 360;
+        }, 100);
+    }
+    }
+    function changeColorB(obj) {
+        var y1 = 50;
+        var y2 = 50;
+        var y3 = 50;
+        setInterval(()=> {
+            let x1 = Math.floor(Math.random()*255);
+            let x2 = Math.floor(Math.random()*255);
+            let x3 = Math.floor(Math.random()*255);
+            if (y1 != x1 || y2 != x2 || y3 != x3) {
+                obj.style.backgroundColor = `rgb(${x1},${x2},${x3})`;
+                y1 = x1;
+                y2 = x2;
+                y3 = x3;
+            }
+        },1);
+    }
+    function changeColorABit(obj) {
+        var y1 = 50;
+        var y2 = 50;
+        var y3 = 50;
+        setInterval(()=> {
+            let x1 = Math.floor(Math.random()*255);
+            let x2 = Math.floor(Math.random()*255);
+            let x3 = Math.floor(Math.random()*255);
+
+            if (y1 != x1 || y2 != x2 || y3 != x3) {
+                obj.style.backgroundColor = `rgb(${x1+10},${x2+10},${x3+10})`;
+                y1 = x1;
+                y2 = x2;
+                y3 = x3;
+            }
+        },100);
+    }
+
+    let square = document.getElementById("block");
+
+    function relocateDiv(div) {
+  div.addEventListener('click', function() {
+    // Get the width and height of the window
+    var windowWidth = window.innerWidth;
+    var windowHeight = window.innerHeight;
+
+    // Generate random x and y coordinates within the window
+    var x = Math.floor(Math.random() * windowWidth);
+    var y = Math.floor(Math.random() * windowHeight);
+
+    // Set the div's new position
+    div.style.left = x + 'px';
+    div.style.top = y + 'px';
+  });
+}
+function relocateDivWithTimer(div) {
+  var timerId;
+
+  function moveDiv() {
+    // Get the width and height of the window
+    var windowWidth = window.innerWidth;
+    var windowHeight = window.innerHeight;
+
+    // Generate random x and y coordinates within the window
+    var x = Math.floor(Math.random() * windowWidth);
+    var y = Math.floor(Math.random() * windowHeight);
+
+    // Set the div's new position
+    div.style.left = x + 'px';
+    div.style.top = y + 'px';
+  }
+
+  // Move the div every 3 seconds
+  timerId = setInterval(moveDiv, 3000);
+
+  div.addEventListener('click', function() {
+    // Move the div immediately
+    moveDiv();
+
+    // Clear the previous timer and set a new one
+    clearInterval(timerId);
+    timerId = setInterval(moveDiv, 3000);
+  });
+}
+
+
+    square.addEventListener("click",() => {relocateDiv(square)});
+    changeColorB(document.body);
+    changeColorABit(square);
+    relocateDivWithTimer(square);
+    </script>
+</body>
+</html>

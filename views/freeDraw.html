@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Draw</title>
+    <style>
+    .square {
+        background-color: black;
+        border: none;
+        border-radius: 0%;
+        height: 20px;
+        width: 20px;
+        margin: 0px;
+        color: black;
+        display:inline-block;
+    }
+    #tileDiv {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, 20px);
+        grid-template-rows: 20px;   
+        grid-gap: 0px;
+    }
+    </style>
+</head>
+<body>
+    <div id="tileDiv"></div>
+    <script>
+    var totalTiles = 0;
+    const tiles = [];
+    var freeze = false;
+
+    function makeDivs(number) {
+        for (let i = 0; i < number; i++) {
+            // Create a new div element
+            let square = document.createElement("div");
+            
+            // Add a class to the div for styling
+            square.classList.add("square");
+            square.id = `tiles${i}`;
+            square.addEventListener("mouseover",() => {changeColor(event)});
+            square.addEventListener("mouseout",() => {changeColor(event)});
+            square.addEventListener("click",() => {toggle(event)});
+            tiles.push(i);
+            totalTiles++;
+            // Append the square to the body of the document
+            document.getElementById("tileDiv").appendChild(square);
+        }
+    }
+    function changeColor(event) {
+        if(freeze) return;
+        var R1 = Math.floor(Math.random() * 256)
+        var G1 = Math.floor(Math.random() * 256)
+        var B1 = Math.floor(Math.random() * 256)
+
+        var changee = `${R1},${G1},${B1}`;
+        event.target.style.background = `rgb(${R1},${G1},${B1})`
+        event.target.style.color = `rgb(${R1},${G1},${B1})`
+    }
+    function toggle(event) {
+        if(event.target.style.backgroundColor == "black"){
+            event.target.removeEventListener("mouseover",() => {changeColor(event)});
+            event.target.removeEventListener("mouseout",() => {changeColor(event)});
+            event.target.style.backgroundColor = "white";
+        }else{
+            event.target.addEventListener("mouseover",() => {changeColor(event)});
+            event.target.addEventListener("mouseout",() => {changeColor(event)});
+            event.target.style.backgroundColor = "black";
+        }
+    }
+    function freezeColors(){
+        if(freeze){
+            freeze = false;
+        }else{
+            freeze = true;
+        }
+    }
+    function resetDivs() {
+    for (let i = 0; i < totalTiles; i++) {
+        document.getElementById(`tiles${i}`).style.backgroundColor = "black";
+        document.getElementById(`tiles${i}`).removeEventListener("mouseover", changeColor);
+        document.getElementById(`tiles${i}`).removeEventListener("mouseout", changeColor);
+        document.getElementById(`tiles${i}`).addEventListener("mouseover", resetColor);
+    }
+}
+function toggleSquare(event) {
+        if (event.target.classList.contains("active")) {
+            event.target.classList.remove("active");
+            event.target.style.background = "black";
+            event.target.removeEventListener("mouseover", changeColor);
+            event.target.removeEventListener("mouseout", changeColor);
+        } else {
+            event.target.classList.add("active");
+            event.target.addEventListener("mouseover", changeColor);
+            event.target.addEventListener("mouseout", changeColor);
+        }
+    }
+    function freezeSquares(event) {
+        if (event.code === "Space") {
+            if (isFrozen) {
+                isFrozen = false;
+                tiles.forEach((tile) => {
+                    tile.addEventListener("mouseover", changeColor);
+                    tile.addEventListener("mouseout", changeColor);
+                });
+            } else {
+                isFrozen = true;
+                tiles.forEach((tile) => {
+                    tile.removeEventListener("mouseover", changeColor);
+                    tile.removeEventListener("mouseout", changeColor);
+                });
+            }
+        }
+    }
+    function resetSquares(event) {
+        if (event.code === "KeyD") {
+            tiles.forEach((tile) => {
+                tile.removeEventListener("mouseover", changeColor);
+                tile.addEventListener("mouseover", resetTile);
+            });
+        }
+    }
+    function resetTile(event) {
+        event.target.style.background = "black";
+    }
+    document.addEventListener("keydown", freezeSquares);
+    document.addEventListener("keydown", resetSquares);
+    makeDivs(2840); //each row is 71 tiles
+    </script>
+</body>
+</html>
